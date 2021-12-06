@@ -1,5 +1,5 @@
 # SoftWare_TeamProject
-1st, 2nd semester, 3rd project
+1st year student, 2nd semester, 3rd project
 
 
 ## 기능 //출처 : 지난 학기의 다른 분반 과제
