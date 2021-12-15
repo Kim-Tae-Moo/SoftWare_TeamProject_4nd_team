@@ -4,108 +4,113 @@
 #include<time.h>
 #include<windows.h>
 
-// °í°´ Á¤º¸ ±¸Á¶Ã¼
+//ì„¤ê³„ ë° í”„ë¡œê·¸ë¨ ì‘ì„± : ì€ì„±ì›
+//ì„¤ê³„ ë° í”„ë¡œê·¸ë¨ ìˆ˜ì • : ê¹€íƒœë¬´
+//ì„¤ê³„ ë° íšŒì›ì •ë³´ ë‹´ë‹¹: ì´ì›ê²¸
+//ì„¤ê³„ ë° ë„ì„œì •ë³´ ë‹´ë‹¹ : 
+
+// ê³ ê° ì •ë³´ êµ¬ì¡°ì²´
 typedef struct _customer {
-    char id[20];                        //°í°´ ID
-    char name[30];                      //°í°´ÀÌ¸§
-    char phone[20];                     //ÀüÈ­¹øÈ£
-    char address[60];                   //ÁÖ¼Ò
+    char id[20];                        //ê³ ê° ID
+    char name[30];                      //ê³ ê°ì´ë¦„
+    char phone[20];                     //ì „í™”ë²ˆí˜¸
+    char address[60];                   //ì£¼ì†Œ
 }CUSTOMER;
 
-// µµ¼­ Á¤º¸ ±¸Á¶Ã¼
+// ë„ì„œ ì •ë³´ êµ¬ì¡°ì²´
 typedef struct _book{
     char ISBN[100];                     // ISBN
-    char title[200];                    // µµ¼­Á¦¸ñ
-    char author[200];                   // ÀúÀÚ
-    char publishing[200];               // ÃâÆÇ»ç
-    int is_rented;                     //1: ´ë¿©Áß, 0: ´ë¿©ÁßÀÌ ¾Æ´Ô
+    char title[200];                    // ë„ì„œì œëª©
+    char author[200];                   // ì €ì
+    char publishing[200];               // ì¶œíŒì‚¬
+    int is_rented;                     //1: ëŒ€ì—¬ì¤‘, 0: ëŒ€ì—¬ì¤‘ì´ ì•„ë‹˜
 }BOOK;
 
-//´ë¿© Á¤º¸ ±¸Á¶Ã¼
+//ëŒ€ì—¬ ì •ë³´ êµ¬ì¡°ì²´
 typedef struct _rent_info{
-    int id;                             // ´ë¿© ¹øÈ£
+    int id;                             // ëŒ€ì—¬ ë²ˆí˜¸
     int book_ISBN;                      // ISBN
-    int customer_id;                    // È¸¿ø¹øÈ£
-    int rent_date;                      // ´ë¿© ³¯Â¥
-    int ret_date;                       // ¹İ³³ ³¯Â¥
-    int ret_due_date;                   // ¹İ³³¿¹Á¤ ÀÏÀÚ
-    int is_returned;                    //1: ¹İ³³ ¿Ï·á, 0: ´ë¿©
+    int customer_id;                    // íšŒì›ë²ˆí˜¸
+    int rent_date;                      // ëŒ€ì—¬ ë‚ ì§œ
+    int ret_date;                       // ë°˜ë‚© ë‚ ì§œ
+    int ret_due_date;                   // ë°˜ë‚©ì˜ˆì • ì¼ì
+    int is_returned;                    //1: ë°˜ë‚© ì™„ë£Œ, 0: ëŒ€ì—¬
 }RENT_INFO;
 
-void input_customer(void);              // È¸¿øÁ¤º¸ÆÄÀÏÀ» ÀĞ¾î¼­ ±¸Á¶Ã¼¿¡ ´ã´ÂÇÔ¼ö
-void input_book(void);                  // Ã¥ Á¤º¸ÆÄÀÏÀ» ÀĞ¾î¼­ ±¸Á¶Ã¼¿¡ ´ã´ÂÇÔ¼ö
-void new_customer(void);                // ½Å±Ô °í°´
-void new_book(void);                    // ½Å±Ô Ã¥
-int searchname_customer(void);          // ÀÌ¸§À¸·Î °í°´°Ë»ö
-int searchphone_customer(void);         // ¿¬¶ôÃ³·Î °í°´°Ë»ö
-int searchtitle_book(void);             // Á¦¸ñÀ¸·Î µµ¼­°Ë»ö
-int searchauthor_book(void);            // ÀúÀÚ·Î µµ¼­°Ë»ö
-void modify_customer(void);             // È¸¿øÁ¤º¸ ¼öÁ¤
-void delete_customer(void);             // È¸¿øÁ¤º¸ »èÁ¦
-void modify_book(void);                 // Ã¥Á¤º¸ ¼öÁ¤
-void delete_book(void);                 // Ã¥Á¤º¸ »èÁ¦
-void rent_book(void);                   // Ã¥ ´ë¿©
-void return_book(void);                 // Ã¥ ¹İ³³
-void rent_information(void);            // ´ë¿© Á¤º¸
+void input_customer(void);              // íšŒì›ì •ë³´íŒŒì¼ì„ ì½ì–´ì„œ êµ¬ì¡°ì²´ì— ë‹´ëŠ”í•¨ìˆ˜
+void input_book(void);                  // ì±… ì •ë³´íŒŒì¼ì„ ì½ì–´ì„œ êµ¬ì¡°ì²´ì— ë‹´ëŠ”í•¨ìˆ˜
+void new_customer(void);                // ì‹ ê·œ ê³ ê°
+void new_book(void);                    // ì‹ ê·œ ì±…
+int searchname_customer(void);          // ì´ë¦„ìœ¼ë¡œ ê³ ê°ê²€ìƒ‰
+int searchphone_customer(void);         // ì—°ë½ì²˜ë¡œ ê³ ê°ê²€ìƒ‰
+int searchtitle_book(void);             // ì œëª©ìœ¼ë¡œ ë„ì„œê²€ìƒ‰
+int searchauthor_book(void);            // ì €ìë¡œ ë„ì„œê²€ìƒ‰
+void modify_customer(void);             // íšŒì›ì •ë³´ ìˆ˜ì •
+void delete_customer(void);             // íšŒì›ì •ë³´ ì‚­ì œ
+void modify_book(void);                 // ì±…ì •ë³´ ìˆ˜ì •
+void delete_book(void);                 // ì±…ì •ë³´ ì‚­ì œ
+void rent_book(void);                   // ì±… ëŒ€ì—¬
+void return_book(void);                 // ì±… ë°˜ë‚©
+void rent_information(void);            // ëŒ€ì—¬ ì •ë³´
 
 
-CUSTOMER customer_info[200];             // È¸¿øÁ¤º¸¸¦ ´ã±âÀ§ÇÑ ±¸Á¶Ã¼
-int c_idx = 0;                          // È¸¿øÁ¤º¸¸¦ ¸î°³ ´ã¾Ò´ÂÁö Ä«¿îÆ®
-BOOK book_info[200];                    // Ã¥Á¤º¸¸¦ ´ã±âÀ§ÇÑ ±¸Á¶Ã¼
-int b_idx = 0;                          // Ã¥Á¤º¸¸¦ ¸î°³ ´ã¾Ò´ÂÁö Ä«¿îÆ®
+CUSTOMER customer_info[200];             // íšŒì›ì •ë³´ë¥¼ ë‹´ê¸°ìœ„í•œ êµ¬ì¡°ì²´
+int c_idx = 0;                          // íšŒì›ì •ë³´ë¥¼ ëª‡ê°œ ë‹´ì•˜ëŠ”ì§€ ì¹´ìš´íŠ¸
+BOOK book_info[200];                    // ì±…ì •ë³´ë¥¼ ë‹´ê¸°ìœ„í•œ êµ¬ì¡°ì²´
+int b_idx = 0;                          // ì±…ì •ë³´ë¥¼ ëª‡ê°œ ë‹´ì•˜ëŠ”ì§€ ì¹´ìš´íŠ¸
 int idx;
-RENT_INFO rent;                          //ÇÑ °³ÀÇ ºñµğ¿À ´ë¿©/¹İ³³
-int rent_id = 1;                        //´ë¿©¹øÈ£
+RENT_INFO rent;                          //í•œ ê°œì˜ ë¹„ë””ì˜¤ ëŒ€ì—¬/ë°˜ë‚©
+int rent_id = 1;                        //ëŒ€ì—¬ë²ˆí˜¸
 
 
 
 int main(void)
 {
-    SetConsoleTextAttribute( GetStdHandle ( STD_OUTPUT_HANDLE), 3); //printf¹®ÀÇ ÅØ½ºÆ® »öÀ» ¹Ù²Ù¾î¶ó.
+    SetConsoleTextAttribute( GetStdHandle ( STD_OUTPUT_HANDLE), 3); //printfë¬¸ì˜ í…ìŠ¤íŠ¸ ìƒ‰ì„ ë°”ê¾¸ì–´ë¼.
     int i, sel = 1;
-    input_customer();                   // °í°´ Á¤º¸ ÀÔ·Â
-    input_book();                       // Ã¥ Á¤º¸ ÀÔ·Â
+    input_customer();                   // ê³ ê° ì •ë³´ ì…ë ¥
+    input_book();                       // ì±… ì •ë³´ ì…ë ¥
 
     while (sel != 0)
     {
-        system("cls");                // È­¸é Áö¿ì±â À©µµ¿ì´Â cls ¸ÆÀº clear
-        //¸ŞÀÎ¸Ş´º
+        system("cls");                // í™”ë©´ ì§€ìš°ê¸° ìœˆë„ìš°ëŠ” cls ë§¥ì€ clear
+        //ë©”ì¸ë©”ë‰´
 
-        printf("                                     ¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
-        printf("                                     ¦­        < µµ¼­°ü Á¤º¸ ½Ã½ºÅÛ>        ¦­\n");
-        printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-        printf("                                     ¦­             1. °í°´ °ü¸®            ¦­\n");
-        printf("                                     ¦­             2. µµ¼­ °ü¸®            ¦­\n");
-        printf("                                     ¦­             3. ´ë¿© °ü¸®            ¦­\n");
-        printf("                                     ¦­               0. Á¾·á               ¦­\n");
-        printf("                                     ¦±¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦°\n");
-        printf("                                      ¹øÈ£¸¦ ¼±ÅÃÇÏ¼¼¿ä: ");
+        printf("                                     â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\n");
+        printf("                                     â”ƒ        < ë„ì„œê´€ ì •ë³´ ì‹œìŠ¤í…œ>        â”ƒ\n");
+        printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+        printf("                                     â”ƒ             1. ê³ ê° ê´€ë¦¬            â”ƒ\n");
+        printf("                                     â”ƒ             2. ë„ì„œ ê´€ë¦¬            â”ƒ\n");
+        printf("                                     â”ƒ             3. ëŒ€ì—¬ ê´€ë¦¬            â”ƒ\n");
+        printf("                                     â”ƒ               0. ì¢…ë£Œ               â”ƒ\n");
+        printf("                                     â”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›\n");
+        printf("                                      ë²ˆí˜¸ë¥¼ ì„ íƒí•˜ì„¸ìš”: ");
         scanf("%d", &sel);
         r:;
-        switch (sel)   //selÀÌ ÄÉÀÌ½º¿¡ ¸Â´Â ¼ıÀÚÀÌ¸é ÇØ´ç¼ıÀÚ ÄÉÀÌ½º·Î ÀÌµ¿ÇÑ´Ù.
+        switch (sel)   //selì´ ì¼€ì´ìŠ¤ì— ë§ëŠ” ìˆ«ìì´ë©´ í•´ë‹¹ìˆ«ì ì¼€ì´ìŠ¤ë¡œ ì´ë™í•œë‹¤.
         {
-            //°í°´ °ü¸® ¸Ş´º
+            //ê³ ê° ê´€ë¦¬ ë©”ë‰´
             case 1:
             while (sel != 0)
             {
-                system("cls");            //È­¸é Áö¿ì±â  .. À©µµ¿ì´Â cls ¸ÆÀº clear
-                printf("                                     ¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
-                printf("                                     ¦­            < °í°´ °ü¸® >            ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        1. ½Å±Ô È¸¿ø µî·Ï            ¦­\n");
-                printf("                                     ¦­        2. È¸¿ø Á¤º¸ ¼öÁ¤            ¦­\n");
-                printf("                                     ¦­        3. È¸¿ø Á¤º¸ »èÁ¦            ¦­\n");
-                printf("                                     ¦­        4. ÀüÃ¼ È¸¿ø ¸®½ºÆ® Ãâ·Â     ¦­\n");
-                printf("                                     ¦­        5. È¸¿ø ÀÌ¸§À¸·Î °Ë»ö        ¦­\n");
-                printf("                                     ¦­        6. È¸¿ø ¿¬¶ôÃ³·Î °Ë»ö        ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        9. ¸ŞÀÎ¸Ş´º·Î ÀÌµ¿           ¦­\n");
-                printf("                                     ¦­        0. ÇÁ·Î±×·¥ Á¾·á             ¦­\n");
-                printf("                                     ¦±¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦°\n");;
-                printf("                                       ¹øÈ£¸¦ ¼±ÅÃÇÏ¼¼¿ä: ");
+                system("cls");            //í™”ë©´ ì§€ìš°ê¸°  .. ìœˆë„ìš°ëŠ” cls ë§¥ì€ clear
+                printf("                                     â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\n");
+                printf("                                     â”ƒ            < ê³ ê° ê´€ë¦¬ >            â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        1. ì‹ ê·œ íšŒì› ë“±ë¡            â”ƒ\n");
+                printf("                                     â”ƒ        2. íšŒì› ì •ë³´ ìˆ˜ì •            â”ƒ\n");
+                printf("                                     â”ƒ        3. íšŒì› ì •ë³´ ì‚­ì œ            â”ƒ\n");
+                printf("                                     â”ƒ        4. ì „ì²´ íšŒì› ë¦¬ìŠ¤íŠ¸ ì¶œë ¥     â”ƒ\n");
+                printf("                                     â”ƒ        5. íšŒì› ì´ë¦„ìœ¼ë¡œ ê²€ìƒ‰        â”ƒ\n");
+                printf("                                     â”ƒ        6. íšŒì› ì—°ë½ì²˜ë¡œ ê²€ìƒ‰        â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        9. ë©”ì¸ë©”ë‰´ë¡œ ì´ë™           â”ƒ\n");
+                printf("                                     â”ƒ        0. í”„ë¡œê·¸ë¨ ì¢…ë£Œ             â”ƒ\n");
+                printf("                                     â”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›\n");;
+                printf("                                       ë²ˆí˜¸ë¥¼ ì„ íƒí•˜ì„¸ìš”: ");
                 scanf("%d", &sel);
 
-                switch (sel)  //selÀÌ ÄÉÀÌ½º¿¡ ¸Â´Â ¼ıÀÚÀÌ¸é ÇØ´ç¼ıÀÚ ÄÉÀÌ½º·Î ÀÌµ¿ÇÑ´Ù.
+                switch (sel)  //selì´ ì¼€ì´ìŠ¤ì— ë§ëŠ” ìˆ«ìì´ë©´ í•´ë‹¹ìˆ«ì ì¼€ì´ìŠ¤ë¡œ ì´ë™í•œë‹¤.
                 {
                     case 1:
                         new_customer();
@@ -133,7 +138,7 @@ int main(void)
                     case 5:
                         idx = searchname_customer();
                         if (idx == -1)
-                        printf("                                       ÀÏÄ¡ÇÏ´Â °í°´ÀÌ ¾ø½À´Ï´Ù.\n");
+                        printf("                                       ì¼ì¹˜í•˜ëŠ” ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤.\n");
                         else
                         {
                             printf("                                       %s, %s, %s, %s\n"
@@ -147,7 +152,7 @@ int main(void)
                     case 6:
                         idx = searchphone_customer();
                         if (idx == -1)
-                            printf("                                       ÀÏÄ¡ÇÏ´Â °í°´ÀÌ ¾ø½À´Ï´Ù.\n");
+                            printf("                                       ì¼ì¹˜í•˜ëŠ” ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤.\n");
                         else
                         {
                             printf("                                       %s, %s, %s, %s\n"
@@ -166,28 +171,28 @@ int main(void)
             }
             break;
 
-            //µµ¼­ °ü¸® ¸Ş´º
+            //ë„ì„œ ê´€ë¦¬ ë©”ë‰´
             case 2:
             while (sel != 0)
             {
 
-                system("cls");            //È­¸é Áö¿ì±â  .. À©µµ¿ì´Â cls ¸ÆÀº clear
-                printf("                                     ¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
-                printf("                                     ¦­            < µµ¼­ °ü¸® >            ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        1. ½Å±Ô µµ¼­ µî·Ï            ¦­\n");
-                printf("                                     ¦­        2. µµ¼­ Á¤º¸ ¼öÁ¤            ¦­\n");
-                printf("                                     ¦­        3. µµ¼­ Á¤º¸ »èÁ¦            ¦­\n");
-                printf("                                     ¦­        4. ÀüÃ¼ µµ¼­ ¸®½ºÆ® Ãâ·Â     ¦­\n");
-                printf("                                     ¦­        5. µµ¼­ Á¦¸ñÀ¸·Î °Ë»ö        ¦­\n");
-                printf("                                     ¦­        6. µµ¼­ ÀúÀÚ·Î °Ë»ö          ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        9. ¸ŞÀÎ¸Ş´º·Î ÀÌµ¿           ¦­\n");
-                printf("                                     ¦­        0. ÇÁ·Î±×·¥ Á¾·á             ¦­\n");
-                printf("                                     ¦±¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦°\n");;
-                printf("                                       ¹øÈ£¸¦ ¼±ÅÃÇÏ¼¼¿ä: ");
+                system("cls");            //í™”ë©´ ì§€ìš°ê¸°  .. ìœˆë„ìš°ëŠ” cls ë§¥ì€ clear
+                printf("                                     â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\n");
+                printf("                                     â”ƒ            < ë„ì„œ ê´€ë¦¬ >            â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        1. ì‹ ê·œ ë„ì„œ ë“±ë¡            â”ƒ\n");
+                printf("                                     â”ƒ        2. ë„ì„œ ì •ë³´ ìˆ˜ì •            â”ƒ\n");
+                printf("                                     â”ƒ        3. ë„ì„œ ì •ë³´ ì‚­ì œ            â”ƒ\n");
+                printf("                                     â”ƒ        4. ì „ì²´ ë„ì„œ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥     â”ƒ\n");
+                printf("                                     â”ƒ        5. ë„ì„œ ì œëª©ìœ¼ë¡œ ê²€ìƒ‰        â”ƒ\n");
+                printf("                                     â”ƒ        6. ë„ì„œ ì €ìë¡œ ê²€ìƒ‰          â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        9. ë©”ì¸ë©”ë‰´ë¡œ ì´ë™           â”ƒ\n");
+                printf("                                     â”ƒ        0. í”„ë¡œê·¸ë¨ ì¢…ë£Œ             â”ƒ\n");
+                printf("                                     â”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›\n");;
+                printf("                                       ë²ˆí˜¸ë¥¼ ì„ íƒí•˜ì„¸ìš”: ");
                 scanf("%d", &sel);
-                switch (sel)     //selÀÌ ÄÉÀÌ½º¿¡ ¸Â´Â ¼ıÀÚÀÌ¸é ÇØ´ç¼ıÀÚ ÄÉÀÌ½º·Î ÀÌµ¿ÇÑ´Ù.
+                switch (sel)     //selì´ ì¼€ì´ìŠ¤ì— ë§ëŠ” ìˆ«ìì´ë©´ í•´ë‹¹ìˆ«ì ì¼€ì´ìŠ¤ë¡œ ì´ë™í•œë‹¤.
                 {
                     case 1:
                         new_book();
@@ -216,7 +221,7 @@ int main(void)
                     case 5:
                         idx = searchtitle_book();
                         if (idx == -1)
-                            printf("                                       ÀÏÄ¡ÇÏ´Â µµ¼­°¡ ¾ø½À´Ï´Ù.\n");
+                            printf("                                       ì¼ì¹˜í•˜ëŠ” ë„ì„œê°€ ì—†ìŠµë‹ˆë‹¤.\n");
                         else
                         {
                             printf("                                       %s, %s, %s, %s\n"
@@ -230,7 +235,7 @@ int main(void)
                     case 6:
                         idx = searchauthor_book();
                         if (idx == -1)
-                            printf("                                       ÀÏÄ¡ÇÏ´Â µµ¼­°¡ ¾ø½À´Ï´Ù.\n");
+                            printf("                                       ì¼ì¹˜í•˜ëŠ” ë„ì„œê°€ ì—†ìŠµë‹ˆë‹¤.\n");
                         else
                         {
                             printf("                                       %s, %s, %s, %s\n"
@@ -246,28 +251,28 @@ int main(void)
                 }
                 system("pause");
             }
-            //´ë¿© °ü¸® ¸Ş´º
+            //ëŒ€ì—¬ ê´€ë¦¬ ë©”ë‰´
             case 3:
             while (sel != 0)
             {
 
-                system("cls");            //È­¸é Áö¿ì±â
-                printf("                                     ¦®¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¯\n");
-                printf("                                     ¦­            < µµ¼­ °ü¸® >            ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        1. µµ¼­ ´ë¿©                 ¦­\n");
-                printf("                                     ¦­                                     ¦­\n");
-                printf("                                     ¦­        2. µµ¼­ ¹İ³³                 ¦­\n");
-                printf("                                     ¦­                                     ¦­\n");
-                printf("                                     ¦­        3. ´ë¿© Á¤º¸                 ¦­\n");
-                printf("                                     ¦­                                     ¦­\n");
-                printf("                                     ¦²¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦´\n");
-                printf("                                     ¦­        9. ¸ŞÀÎ¸Ş´º·Î ÀÌµ¿           ¦­\n");
-                printf("                                     ¦­        0. ÇÁ·Î±×·¥ Á¾·á             ¦­\n");
-                printf("                                     ¦±¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦°\n");;
-                printf("                                       ¹øÈ£¸¦ ¼±ÅÃÇÏ¼¼¿ä: ");
+                system("cls");            //í™”ë©´ ì§€ìš°ê¸°
+                printf("                                     â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”“\n");
+                printf("                                     â”ƒ            < ë„ì„œ ê´€ë¦¬ >            â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        1. ë„ì„œ ëŒ€ì—¬                 â”ƒ\n");
+                printf("                                     â”ƒ                                     â”ƒ\n");
+                printf("                                     â”ƒ        2. ë„ì„œ ë°˜ë‚©                 â”ƒ\n");
+                printf("                                     â”ƒ                                     â”ƒ\n");
+                printf("                                     â”ƒ        3. ëŒ€ì—¬ ì •ë³´                 â”ƒ\n");
+                printf("                                     â”ƒ                                     â”ƒ\n");
+                printf("                                     â”£â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”«\n");
+                printf("                                     â”ƒ        9. ë©”ì¸ë©”ë‰´ë¡œ ì´ë™           â”ƒ\n");
+                printf("                                     â”ƒ        0. í”„ë¡œê·¸ë¨ ì¢…ë£Œ             â”ƒ\n");
+                printf("                                     â”—â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”›\n");;
+                printf("                                       ë²ˆí˜¸ë¥¼ ì„ íƒí•˜ì„¸ìš”: ");
                 scanf("%d", &sel);
-                switch (sel)     //selÀÌ ÄÉÀÌ½º¿¡ ¸Â´Â ¼ıÀÚÀÌ¸é ÇØ´ç¼ıÀÚ ÄÉÀÌ½º·Î ÀÌµ¿ÇÑ´Ù.
+                switch (sel)     //selì´ ì¼€ì´ìŠ¤ì— ë§ëŠ” ìˆ«ìì´ë©´ í•´ë‹¹ìˆ«ì ì¼€ì´ìŠ¤ë¡œ ì´ë™í•œë‹¤.
                 {
                     case 1:
                         rent_book();
@@ -290,7 +295,7 @@ int main(void)
 
 
 
-// Ã¥ ´ë¿©
+// ì±… ëŒ€ì—¬
 void rent_book()
 {
     int i, book_ISBN, customer_id, check;
@@ -307,10 +312,10 @@ void rent_book()
                 , book_info[i].publishing
                 , book_info[i].is_rented);
     }
-    idx = searchtitle_book();    //Ã¥Á¦¸ñÀ» °Ë»öÇØ¼­³ª¿Â ÁÙ
+    idx = searchtitle_book();    //ì±…ì œëª©ì„ ê²€ìƒ‰í•´ì„œë‚˜ì˜¨ ì¤„
 
                 if (idx == -1){
-                    printf("                                       ÀÏÄ¡ÇÏ´Â µµ¼­°¡ ¾ø½À´Ï´Ù.\n");
+                    printf("                                       ì¼ì¹˜í•˜ëŠ” ë„ì„œê°€ ì—†ìŠµë‹ˆë‹¤.\n");
                     main();
                 }
                 else
@@ -323,15 +328,15 @@ void rent_book()
                         , book_info[idx].is_rented);
                 }
 
-    printf("                                       ===== ´ë¿©ÇÏ·Á¸é 1, ¾Æ´Ï¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä! =====\n");
-    printf("\n                                       ÀÔ·Â : "); scanf("%d", &check);
+    printf("                                       ===== ëŒ€ì—¬í•˜ë ¤ë©´ 1, ì•„ë‹ˆë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”! =====\n");
+    printf("\n                                       ì…ë ¥ : "); scanf("%d", &check);
 
 
         if (check == 1){
             book_info[idx].is_rented = 1;
             FILE *fp = fopen("modfiybook.txt","wb");
             for(i = 0; i < b_idx; i++){
-                fprintf(fp,                                        "%s,%s,%s,%s,%d\n"
+                fprintf(fp, "%s,%s,%s,%s,%d\n"
                 , book_info[i].ISBN
                 , book_info[i].title
                 , book_info[i].author
@@ -342,12 +347,12 @@ void rent_book()
             remove("book_info.txt");
             char oldname[80] = "modfiybook.txt";
             char newname[80] = "book_info.txt";
-            rename(oldname, newname);     //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname);     //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiybook.txt");
         }
         else
         {
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
             main();
           //  system("pause");
         }
@@ -361,17 +366,17 @@ void rent_book()
             , customer_info[i].address);
     }
 
-    printf("°í°´ ID¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+    printf("ê³ ê° IDë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
     scanf("%d", &customer_id);
 
-    printf("µµ¼­ ´ë¿©°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+    printf("ë„ì„œ ëŒ€ì—¬ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
     system("pause");
 }
 
 
 
 
-// ¸ğµç µµ¼­  ¹İ³³
+// ëª¨ë“  ë„ì„œ  ë°˜ë‚©
 void return_book()
 {
     time_t timer;
@@ -381,14 +386,14 @@ void return_book()
     int check;
     int i;
 
-    printf("                                      ===== ¸ğµç µµ¼­¸¦ ¹İ³³ÇÏ·Á¸é 1, ¾Æ´Ï¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä! =====\n");
-    printf("\n                                       ÀÔ·Â : "); scanf("%d", &check);
+    printf("                                      ===== ëª¨ë“  ë„ì„œë¥¼ ë°˜ë‚©í•˜ë ¤ë©´ 1, ì•„ë‹ˆë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”! =====\n");
+    printf("\n                                       ì…ë ¥ : "); scanf("%d", &check);
 
 
         if (check == 1){
             FILE *fp = fopen("modfiybook.txt","wb");
             for(i = 0; i < b_idx; i++){
-                fprintf(fp,                                        "%s,%s,%s,%s,%d\n"
+                fprintf(fp, "%s,%s,%s,%s,%d\n"
                 , book_info[i].ISBN
                 , book_info[i].title
                 , book_info[i].author
@@ -399,24 +404,23 @@ void return_book()
             remove("book_info.txt");
             char oldname[80] = "modfiybook.txt";
             char newname[80] = "book_info.txt";
-            rename(oldname, newname);     //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname);     //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiybook.txt");
         }
         else
         {
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
             main();
-          //  system("pause");
         }
 
-    printf("µµ¼­ ¹İ³³ÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
+    printf("ë„ì„œ ë°˜ë‚©ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
     system("pause");
 }
 
 
 
 
-//´ë¿© Á¤º¸
+//ëŒ€ì—¬ ì •ë³´
 void rent_information()
 {
     int i, book_ISBN, customer_id;
@@ -427,28 +431,28 @@ void rent_information()
     for (i = 0; i < b_idx; i++)
     {
         if (book_info[i].is_rented == 1)
-            printf("\nISBN: %s, Ã¥ Á¦¸ñ: %s, ÀúÀÚ: %s, ÃâÆÇ»ç: %s, ´ë¿©Áß, ¹İ³³ÀÏÀÚ 0³â 0¿ù 0ÀÏ \n"
+            printf("\nISBN: %s, ì±… ì œëª©: %s, ì €ì: %s, ì¶œíŒì‚¬: %s, ëŒ€ì—¬ì¤‘, ë°˜ë‚©ì¼ì 0ë…„ 0ì›” 0ì¼ \n"
                 , book_info[i].ISBN
                 , book_info[i].title
                 , book_info[i].author
                 , book_info[i].publishing);
     }
 
-    printf("\n´ë¿© Á¤º¸¸¦ ¼öÁ¤ÇÏ·Á¸é 1, ¾Æ´Ï¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä!\n");
-    printf("\n                                       ÀÔ·Â : ");
+    printf("\nëŒ€ì—¬ ì •ë³´ë¥¼ ìˆ˜ì •í•˜ë ¤ë©´ 1, ì•„ë‹ˆë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”!\n");
+    printf("\n                                       ì…ë ¥ : ");
     scanf("%d", &check);
 
     if (check == 1){
-        printf("\n¼öÁ¤ÇÒ µµ¼­¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä.\n");
+        printf("\nìˆ˜ì •í•  ë„ì„œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”.\n");
 
-        idx = searchtitle_book();    //Ã¥Á¦¸ñÀ» °Ë»öÇØ¼­³ª¿Â ÁÙ
+        idx = searchtitle_book();    //ì±…ì œëª©ì„ ê²€ìƒ‰í•´ì„œë‚˜ì˜¨ ì¤„
         if (book_info[idx].is_rented == !1){
-            printf("                                     ÇØ´çµµ¼­´Â ´ë¿©µÇÁö ¾Ê¾Ò½À´Ï´Ù.\n");
+            printf("                                     í•´ë‹¹ë„ì„œëŠ” ëŒ€ì—¬ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n");
             main();
         }
         else
         {
-            printf("                                    ISBN: %s, Á¦¸ñ: %s, ÀúÀÚ: %s, ÃâÆÇ»ç: %s, ´ë¿©Á¤º¸: %d\n"
+            printf("                                    ISBN: %s, ì œëª©: %s, ì €ì: %s, ì¶œíŒì‚¬: %s, ëŒ€ì—¬ì •ë³´: %d\n"
                         , book_info[idx].ISBN
                         , book_info[idx].title
                         , book_info[idx].author
@@ -456,8 +460,8 @@ void rent_information()
                         , book_info[idx].is_rented);
         }
 
-        printf("                                  ===== ÇØ´ç µµ¼­¸¦ ¹İ³³ ÇÏ·Á¸é 1, ¾Æ´Ï¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä! =====\n");
-        printf("\n                                       ÀÔ·Â : "); scanf("%d", &check);
+        printf("                                  ===== í•´ë‹¹ ë„ì„œë¥¼ ë°˜ë‚© í•˜ë ¤ë©´ 1, ì•„ë‹ˆë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”! =====\n");
+        printf("\n                                       ì…ë ¥ : "); scanf("%d", &check);
 
 
         if (check == 1){
@@ -474,38 +478,29 @@ void rent_information()
             remove("book_info.txt");
             char oldname[80] = "modfiybook.txt";
             char newname[80] = "book_info.txt";
-            rename(oldname, newname);     //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname);     //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiybook.txt");
         }
         else
         {
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
             main();
-          //  system("pause");
         }
 
     }
-
-    else
-        {
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
-          //  system("pause");
-        }
+    else printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
     system("pause");
 
 }
 
 
-
-
-// Á¦¸ñÀ¸·Î µµ¼­ Á¤º¸ °Ë»ö
+// ì œëª©ìœ¼ë¡œ ë„ì„œ ì •ë³´ ê²€ìƒ‰
 int searchtitle_book(void)
 {
     int i;
     char title[200], Ctitle[200];
-    printf("                                       Á¦¸ñ: ");
+    printf("                                       ì œëª©: ");
     scanf("%s", title);
-    //strcpy(Ctitle, title);
 
     for (i = 0; i < b_idx; i++)
     {
@@ -515,12 +510,12 @@ int searchtitle_book(void)
     return -1;
 }
 
-// ÀúÀÚ·Î µµ¼­ Á¤º¸ °Ë»ö
+// ì €ìë¡œ ë„ì„œ ì •ë³´ ê²€ìƒ‰
 int searchauthor_book(void)
 {
     int i;
     char author[30];
-    printf("                                       ÀúÀÚ: ");
+    printf("                                       ì €ì: ");
     scanf("%s", author);
 
     for (i = 0; i < b_idx; i++)
@@ -531,12 +526,12 @@ int searchauthor_book(void)
     return -1;
 }
 
-// ÀÌ¸§À¸·Î °í°´ Á¤º¸ °Ë»ö
+// ì´ë¦„ìœ¼ë¡œ ê³ ê° ì •ë³´ ê²€ìƒ‰
 int searchname_customer(void)
 {
     int i;
     char name[30];
-    printf("                                       ÀÌ¸§: ");
+    printf("                                       ì´ë¦„: ");
     scanf("%s", name);
 
     for (i = 0; i < c_idx; i++)
@@ -547,12 +542,12 @@ int searchname_customer(void)
     return -1;
 }
 
-// ¿¬¶ôÃ³·Î °í°´ Á¤º¸ °Ë»ö
+// ì—°ë½ì²˜ë¡œ ê³ ê° ì •ë³´ ê²€ìƒ‰
 int searchphone_customer(void)
 {
     int i;
     char phone[30];
-    printf("                                       ¿¬¶ôÃ³: ");
+    printf("                                       ì—°ë½ì²˜: ");
     scanf("%s", phone);
     for (i = 0; i < c_idx; i++)
     {
@@ -562,18 +557,18 @@ int searchphone_customer(void)
     return -1;
 }
 
-// ½Å±Ô Ã¥ Á¤º¸
+// ì‹ ê·œ ì±… ì •ë³´
 void new_book(void)
 {
     FILE* b_fp = fopen("book_info.txt", "a");
-    //±¸Á¶Ã¼ ¹è¿­¿¡ Ã¥ Á¤º¸¸¦ ÀÔ·Â¹ŞÀ½
+    //êµ¬ì¡°ì²´ ë°°ì—´ì— ì±… ì •ë³´ë¥¼ ì…ë ¥ë°›ìŒ
     printf("                                       ISBN: ");
     scanf("%s", book_info[b_idx].ISBN);
-    printf("                                       Ã¥ Á¦¸ñ: ");
+    printf("                                       ì±… ì œëª©: ");
     scanf("%s", book_info[b_idx].title);
-    printf("                                       Ã¥ ÀúÀÚ: ");
+    printf("                                       ì±… ì €ì: ");
     scanf("%s", book_info[b_idx].author);
-    printf("                                       ÃâÆÇ»ç: ");
+    printf("                                       ì¶œíŒì‚¬: ");
     scanf("%s", book_info[b_idx].publishing);
     book_info[b_idx].is_rented = 0;
     fprintf(b_fp, "%s,%s,%s,%s,%d\n"
@@ -587,22 +582,22 @@ void new_book(void)
     fclose(b_fp);
 }
 
-// ½Å±Ô °í°´ Á¤º¸
+// ì‹ ê·œ ê³ ê° ì •ë³´
 void new_customer(void)
 {
     FILE* m_fp = fopen("customer_info.txt", "a");
-    //±¸Á¶Ã¼ ¹è¿­¿¡ °í°´ Á¤º¸¸¦ ÀÔ·Â ¹ŞÀ½
-    printf("                                       ¿¹½Ã -> samuelLee17, Seongdallor, Mookimchi89\n ");
-    printf("                                       È¸¿ø ID: ");
+    //êµ¬ì¡°ì²´ ë°°ì—´ì— ê³ ê° ì •ë³´ë¥¼ ì…ë ¥ ë°›ìŒ
+    printf("                                       ì˜ˆì‹œ -> samuelLee17, Seongdallor, Mookimchi89\n ");
+    printf("                                       íšŒì› ID: ");
     scanf("%s", customer_info [c_idx].id);
-    printf("                                       ¿¹½Ã -> LeeSangKon, EunSeongWon, KimTaeMoo\n ");
-    printf("                                       ÀÌ¸§: ");
+    printf("                                       ì˜ˆì‹œ -> LeeSangKon, EunSeongWon, KimTaeMoo\n ");
+    printf("                                       ì´ë¦„: ");
     scanf("%s", customer_info [c_idx].name);
-    printf("                                       ¿¹½Ã -> 010-2323-3434, 010-2323-3443, 010-2332-2424\n ");
-    printf("                                       ¿¬¶ôÃ³: ");
+    printf("                                       ì˜ˆì‹œ -> 010-2323-3434, 010-2323-3443, 010-2332-2424\n ");
+    printf("                                       ì—°ë½ì²˜: ");
     scanf("%s", customer_info [c_idx].phone);
-    printf("                                       ¿¹½Ã -> Seoul, JeonJu, KwangJu, KyeongKi\n ");
-    printf("                                       ÁÖ¼Ò: ");
+    printf("                                       ì˜ˆì‹œ -> Seoul, JeonJu, KwangJu, KyeongKi\n ");
+    printf("                                       ì£¼ì†Œ: ");
     scanf("%s", customer_info [c_idx].address);
 
     fprintf(m_fp, "%s,%s,%s,%s\n"
@@ -614,19 +609,19 @@ void new_customer(void)
     fclose(m_fp);
 }
 
-// °í°´ Á¤º¸¸¦ ÆÄÀÏ¿¡¼­ ÀÔ·Â¹Ş´Â´Ù.
+// ê³ ê° ì •ë³´ë¥¼ íŒŒì¼ì—ì„œ ì…ë ¥ë°›ëŠ”ë‹¤.
 void input_customer(void)
 {
     FILE* c_fp = fopen("customer_info.txt", "r");
-    char line[150];   // ÇÑ¶óÀÎ¾¿ ÀĞ¾î¿Â´Ù.
+    char line[150];   // í•œë¼ì¸ì”© ì½ì–´ì˜¨ë‹¤.
     char* ptr;
-    int word_cnt;  //¿öµåÄ«¿îÆ®
+    int word_cnt;  //ì›Œë“œì¹´ìš´íŠ¸
 
-    //°í°´ Á¤º¸ ÀÔ·Â
-    while (fscanf(c_fp, "%s", line) > 0)  //0º¸´Ù Å«µ¿¾È¸¸ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Í¶ó
+    //ê³ ê° ì •ë³´ ì…ë ¥
+    while (fscanf(c_fp, "%s", line) > 0)  //0ë³´ë‹¤ í°ë™ì•ˆë§Œ ë°ì´í„°ë¥¼ ì½ì–´ì™€ë¼
     {
         word_cnt = 0;
-        ptr = strtok(line, ",");  //ÀĞ¾î¿Â µ¥ÀÌÅÍ¸¦ , ´ÜÀ§·Î Â©¶ó³»¶ó
+        ptr = strtok(line, ",");  //ì½ì–´ì˜¨ ë°ì´í„°ë¥¼ , ë‹¨ìœ„ë¡œ ì§¤ë¼ë‚´ë¼
         while (ptr != NULL)
         {
             word_cnt++;
@@ -637,7 +632,7 @@ void input_customer(void)
                 strcpy(customer_info[c_idx].id, ptr);
                 break;
             case 2: //char name
-                strcpy(customer_info[c_idx].name, ptr); //½ºÆ®¸µ Ä«ÇÇ¸¦ »ç¿ëÇØ¼­ ¹®ÀÚ¿­ º¹»ç
+                strcpy(customer_info[c_idx].name, ptr); //ìŠ¤íŠ¸ë§ ì¹´í”¼ë¥¼ ì‚¬ìš©í•´ì„œ ë¬¸ìì—´ ë³µì‚¬
                 break;
             case 3:  //char phone
                 strcpy(customer_info[c_idx].phone, ptr);
@@ -652,23 +647,23 @@ void input_customer(void)
         c_idx++;
     }
 
-    fclose(c_fp);// ÆÄÀÏÆ÷ÀÎÅÍ Á¾·á
+    fclose(c_fp);// íŒŒì¼í¬ì¸í„° ì¢…ë£Œ
 }
 
-// Ã¥Á¤º¸¸¦ ÆÄÀÏ¿¡¼­ ÀÔ·Â¹Ş´Â´Ù.
+// ì±…ì •ë³´ë¥¼ íŒŒì¼ì—ì„œ ì…ë ¥ë°›ëŠ”ë‹¤.
 void input_book(void)
 {
 
     FILE* b_fp = fopen("book_info.txt", "r");
-    char line[150];   //ÇÑ¶óÀÎ¾¿ ÀĞ¾î¿Â´Ù
+    char line[150];   //í•œë¼ì¸ì”© ì½ì–´ì˜¨ë‹¤
     char* ptr;
-    int word_cnt;  //¿öµåÄ«¿îÆ®
+    int word_cnt;  //ì›Œë“œì¹´ìš´íŠ¸
 
-    //Ã¥ Á¤º¸ ÀÔ·Â
-    while (fscanf(b_fp, "%s", line) > 0) // 0º¸´Ù Å«µ¿¾È¸¸ µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Í¶ó
+    //ì±… ì •ë³´ ì…ë ¥
+    while (fscanf(b_fp, "%s", line) > 0) // 0ë³´ë‹¤ í°ë™ì•ˆë§Œ ë°ì´í„°ë¥¼ ì½ì–´ì™€ë¼
     {
         word_cnt = 0;
-        ptr = strtok(line, ","); // ÀĞ¾î¿Â µ¥ÀÌÅÍ¸¦ , ´ÜÀ§·Î Â©¶ó³»¶ó
+        ptr = strtok(line, ","); // ì½ì–´ì˜¨ ë°ì´í„°ë¥¼ , ë‹¨ìœ„ë¡œ ì§¤ë¼ë‚´ë¼
         while (ptr != NULL)
         {
             word_cnt++;
@@ -678,7 +673,7 @@ void input_book(void)
                 strcpy(book_info[b_idx].ISBN, ptr);
                 break;
             case 2: //char title
-                strcpy(book_info[b_idx].title, ptr);//½ºÆ®¸µ Ä«ÇÇ¸¦ »ç¿ëÇØ¼­ ¹®ÀÚ¿­ º¹»ç
+                strcpy(book_info[b_idx].title, ptr);//ìŠ¤íŠ¸ë§ ì¹´í”¼ë¥¼ ì‚¬ìš©í•´ì„œ ë¬¸ìì—´ ë³µì‚¬
                 break;
             case 3:  //char author
                 strcpy(book_info[b_idx].author, ptr);
@@ -693,16 +688,16 @@ void input_book(void)
         }
         b_idx++;
     }
-    fclose(b_fp); //ÆÄÀÏÆ÷ÀÎÅÍ Á¾·á
+    fclose(b_fp); //íŒŒì¼í¬ì¸í„° ì¢…ë£Œ
 }
 
-// È¸¿ø Á¤º¸ ¼öÁ¤
+// íšŒì› ì •ë³´ ìˆ˜ì •
 void modify_customer(void)
 {
-    idx = searchname_customer(); //È¸¿ø ÀÌ¸§À» °Ë»öÇØ¼­³ª¿Â ÁÙ
+    idx = searchname_customer(); //íšŒì› ì´ë¦„ì„ ê²€ìƒ‰í•´ì„œë‚˜ì˜¨ ì¤„
 
                 if (idx == -1){
-                    printf("                                       ÀÏÄ¡ÇÏ´Â °í°´ÀÌ ¾ø½À´Ï´Ù.\n");
+                    printf("                                       ì¼ì¹˜í•˜ëŠ” ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤.\n");
                     main();
                 }
                 else
@@ -713,7 +708,7 @@ void modify_customer(void)
                         , customer_info[idx].phone
                         , customer_info[idx].address);
                 }
-    //¼öÁ¤ÇÒ ³»¿ë Á¤ÀÇ
+    //ìˆ˜ì •í•  ë‚´ìš© ì •ì˜
     char new_user_number[100];
     char new_user_name[100];
     char new_user_phone_number[100];
@@ -721,19 +716,19 @@ void modify_customer(void)
     int check;
     int i;
 
-    printf("\n                                       º¯°æÀ» ½ÃÀÛÇÕ´Ï´Ù. \n\n");
-    printf("                                       »õ·Î¿î °í°´ ID¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", &new_user_number);
-    printf("                                       »õ·Î¿î ÀÌ¸§À» ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_user_name);
-    printf("                                       »õ·Î¿î ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_user_phone_number);
-    printf("                                       »õ·Î¿î ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_user_address);
+    printf("\n                                       ë³€ê²½ì„ ì‹œì‘í•©ë‹ˆë‹¤. \n\n");
+    printf("                                       ìƒˆë¡œìš´ ê³ ê° IDë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", &new_user_number);
+    printf("                                       ìƒˆë¡œìš´ ì´ë¦„ì„ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_user_name);
+    printf("                                       ìƒˆë¡œìš´ ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_user_phone_number);
+    printf("                                       ìƒˆë¡œìš´ ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_user_address);
 
-    printf("                                       ¦¬¦¬¦¬¦¬ »õ·Î¿î Á¤º¸¸¦ È®ÀÎÇÕ´Ï´Ù.¦¬¦¬¦¬¦¬ \n\n");
-    printf("                                       »õ·Î¿î °í°´ ID : %s\n", new_user_number);
-    printf("                                       »õ·Î¿î ÀÌ¸§ : %s\n", new_user_name);
-    printf("                                       »õ·Î¿î ÀüÈ­¹øÈ£ : %s\n", new_user_phone_number);
-    printf("                                       »õ·Î¿î ÁÖ¼Ò : %s\n", new_user_address);
-    printf("                                       ¦¬¦¬¦¬¦¬ ¸ÂÀ¸¸é 1, Æ²¸®¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä! ¦¬¦¬¦¬¦¬\n");
-    printf("\n                                       ÀÔ·Â : "); scanf("%d", &check);
+    printf("                                       â”â”â”â” ìƒˆë¡œìš´ ì •ë³´ë¥¼ í™•ì¸í•©ë‹ˆë‹¤.â”â”â”â” \n\n");
+    printf("                                       ìƒˆë¡œìš´ ê³ ê° ID : %s\n", new_user_number);
+    printf("                                       ìƒˆë¡œìš´ ì´ë¦„ : %s\n", new_user_name);
+    printf("                                       ìƒˆë¡œìš´ ì „í™”ë²ˆí˜¸ : %s\n", new_user_phone_number);
+    printf("                                       ìƒˆë¡œìš´ ì£¼ì†Œ : %s\n", new_user_address);
+    printf("                                       â”â”â”â” ë§ìœ¼ë©´ 1, í‹€ë¦¬ë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”! â”â”â”â”\n");
+    printf("\n                                       ì…ë ¥ : "); scanf("%d", &check);
 
         if (check == 1){
             strcpy(customer_info[idx].id, new_user_number);
@@ -752,29 +747,29 @@ void modify_customer(void)
             remove("customer_info.txt");
             char oldname[80] = "modfiy.txt";
             char newname[80] = "customer_info.txt";
-            rename(oldname, newname); //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname); //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiy.txt");
-            printf("                                       Á¤»óÀûÀ¸·Î Ã³¸®µÇ¾ú½À´Ï´Ù.\n");
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì •ìƒì ìœ¼ë¡œ ì²˜ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
           //  system("pause");
         }
         else
         {
-            printf("                                       \nÃ³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       \nì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
           //  system("pause");
         }
 
 }
 
-// È¸¿øÁ¤º¸ »èÁ¦
+// íšŒì›ì •ë³´ ì‚­ì œ
 void delete_customer(void)
 {
     int i;
-    printf("\n\n                                       »èÁ¦¸¦ ÁøÇàÇÕ´Ï´Ù.\n\n");
+    printf("\n\n                                       ì‚­ì œë¥¼ ì§„í–‰í•©ë‹ˆë‹¤.\n\n");
     idx = searchname_customer();
 
                 if (idx == -1)
-                    printf("                                       ÀÏÄ¡ÇÏ´Â °í°´ÀÌ ¾ø½À´Ï´Ù.\n");
+                    printf("                                       ì¼ì¹˜í•˜ëŠ” ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤.\n");
                 else
                 {
                     printf("%s,%s, %s, %s\n"
@@ -785,25 +780,25 @@ void delete_customer(void)
                 }
          FILE *fp;
          fp = fopen("modfiy.txt", "wb");
-//         printf("======= Áö¿ö¾ß ÇÏ´ÂÁÙ  : %d =====\n", temp);
-//         printf("======= ÃÑ ¶óÀÎ : %d =====\n", idx);
+//         printf("======= ì§€ì›Œì•¼ í•˜ëŠ”ì¤„  : %d =====\n", temp);
+//         printf("======= ì´ ë¼ì¸ : %d =====\n", idx);
 
          for(i = 0; i < idx; i++)
          {
             fprintf(fp, "%s,%s,%s,%s\n"
-               ,&customer_info[i].id
-               ,&customer_info[i].name
-               ,&customer_info[i].phone
-               ,&customer_info[i].address);
+               ,customer_info[i].id
+               ,customer_info[i].name
+               ,customer_info[i].phone
+               ,customer_info[i].address);
          }
 
          for(i = idx + 1; i < c_idx; i++)
          {
             fprintf(fp, "%s,%s,%s,%s\n"
-               ,&customer_info[i].id
-               ,&customer_info[i].name
-               ,&customer_info[i].phone
-               ,&customer_info[i].address);
+               ,customer_info[i].id
+               ,customer_info[i].name
+               ,customer_info[i].phone
+               ,customer_info[i].address);
          }
 
          fclose(fp);
@@ -812,21 +807,21 @@ void delete_customer(void)
             char newname[80] = "customer_info.txt";
             rename(oldname, newname);
             remove("modfiy.txt");
-            printf("                                       Á¤»óÀûÀ¸·Î Ã³¸®µÇ¾ú½À´Ï´Ù.\n");
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì •ìƒì ìœ¼ë¡œ ì²˜ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
             system("pause");
            //fflush(stdin);
             c_idx = 0;
             main();
 }
 
-// µµ¼­ Á¤º¸ ¼öÁ¤
+// ë„ì„œ ì •ë³´ ìˆ˜ì •
 void modify_book(void)
 {
-    idx = searchtitle_book();    //Ã¥Á¦¸ñÀ» °Ë»öÇØ¼­³ª¿Â ÁÙ
+    idx = searchtitle_book();    //ì±…ì œëª©ì„ ê²€ìƒ‰í•´ì„œ ë‚˜ì˜¨ ì¤„
 
                 if (idx == -1){
-                    printf("                                       ÀÏÄ¡ÇÏ´Â µµ¼­°¡ ¾ø½À´Ï´Ù.\n");
+                    printf("                                       ì¼ì¹˜í•˜ëŠ” ë„ì„œê°€ ì—†ìŠµë‹ˆë‹¤.\n");
                     main();
                 }
                 else
@@ -837,29 +832,30 @@ void modify_book(void)
                         , book_info[idx].author
                         , book_info[idx].publishing);
                 }
-    //¼öÁ¤ÇÒ ³»¿ë Á¤ÀÇ
+    //ìˆ˜ì •í•  ë‚´ìš© ì •ì˜
     char new_book_ISBN[100];
     char new_book_title[100];
     char new_book_author[100];
     char new_book_publishing[100];
     int check;
     int i;
-    printf("\n\n                                        º¯°æÀ» ½ÃÀÛÇÕ´Ï´Ù. \n\n");
-    printf("                                       »õ·Î¿î ISBN¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_book_ISBN);
-    printf("                                       »õ·Î¿î Á¦¸ñÀ» ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s",new_book_title);
-    printf("                                       »õ·Î¿î ÀúÀÚ¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_book_author);
-    printf("                                       »õ·Î¿î ÃâÆÇ»ç¸¦ ÀÔ·ÂÇÏ¿© ÁÖ¼¼¿ä : "); scanf("%s", new_book_publishing);
+    printf("\n\n                                        ë³€ê²½ì„ ì‹œì‘í•©ë‹ˆë‹¤. \n\n");
+    printf("                                       ìƒˆë¡œìš´ ISBNë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_book_ISBN);
+    printf("                                       ìƒˆë¡œìš´ ì œëª©ì„ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s",new_book_title);
+    printf("                                       ìƒˆë¡œìš´ ì €ìë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_book_author);
+    printf("                                       ìƒˆë¡œìš´ ì¶œíŒì‚¬ë¥¼ ì…ë ¥í•˜ì—¬ ì£¼ì„¸ìš” : "); scanf("%s", new_book_publishing);
 
 
-    printf("                                       ===== »õ·Î¿î Á¤º¸¸¦ È®ÀÎÇÕ´Ï´Ù. ===== \n\n");
-    printf("                                       »õ·Î¿î ISBN : %s\n", new_book_ISBN);
-    printf("                                       »õ·Î¿î Á¦¸ñ : %s\n", new_book_title);
-    printf("                                       »õ·Î¿î ÀúÀÚ : %s\n", new_book_author);
-    printf("                                       »õ·Î¿î ÃâÆÇ»ç : %s\n",new_book_publishing);
+    printf("                                       ===== ìƒˆë¡œìš´ ì •ë³´ë¥¼ í™•ì¸í•©ë‹ˆë‹¤. ===== \n\n");
+    printf("                                       ìƒˆë¡œìš´ ISBN : %s\n", new_book_ISBN);
+    printf("                                       ìƒˆë¡œìš´ ì œëª© : %s\n", new_book_title);
+    printf("                                       ìƒˆë¡œìš´ ì €ì : %s\n", new_book_author);
+    printf("                                       ìƒˆë¡œìš´ ì¶œíŒì‚¬ : %s\n",new_book_publishing);
 
 
-    printf("                                       ===== ¸ÂÀ¸¸é 1, Æ²¸®¸é 2¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä! =====\n");
-    printf("\n                                       ÀÔ·Â : "); scanf("%d", &check);
+    printf("                                       ===== ë§ìœ¼ë©´ 1, í‹€ë¦¬ë©´ 2ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”! =====\n");
+    printf("\n                                       ì…ë ¥ : ");
+    scanf("%d", &check);
 
 
         if (check == 1){
@@ -879,29 +875,25 @@ void modify_book(void)
             remove("book_info.txt");
             char oldname[80] = "modfiybook.txt";
             char newname[80] = "book_info.txt";
-            rename(oldname, newname);     //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname);     //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiybook.txt");
-            printf("                                       Á¤»óÀûÀ¸·Î Ã³¸®µÇ¾ú½À´Ï´Ù.\n");
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì •ìƒì ìœ¼ë¡œ ì²˜ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
           //  system("pause");
         }
-        else
-        {
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
-          //  system("pause");
-        }
+        else printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
 
 }
 
-// µµ¼­ Á¤º¸ »èÁ¦
+// ë„ì„œ ì •ë³´ ì‚­ì œ
 void delete_book(void)
 {
     int i;
-    printf("\n                                       »èÁ¦¸¦ ÁøÇàÇÕ´Ï´Ù.\n\n");
+    printf("\n                                       ì‚­ì œë¥¼ ì§„í–‰í•©ë‹ˆë‹¤.\n\n");
     idx = searchtitle_book();
 
                 if (idx == -1)
-                    printf("                                       ÀÏÄ¡ÇÏ´Â °í°´ÀÌ ¾ø½À´Ï´Ù.\n");
+                    printf("                                       ì¼ì¹˜í•˜ëŠ” ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤.\n");
                 else
                 {
                     printf("                                       %s,%s,%s,%s\n"
@@ -911,41 +903,36 @@ void delete_book(void)
                         , book_info[idx].publishing);
                 }
          FILE *fp = fopen("modfiybook.txt","wb");;
-//         printf("======= Áö¿ö¾ß ÇÏ´ÂÁÙ  : %d =====\n", temp);
-//         printf("======= ÃÑ ¶óÀÎ : %d =====\n", idx);
+//         printf("======= ì§€ì›Œì•¼ í•˜ëŠ”ì¤„  : %d =====\n", temp);
+//         printf("======= ì´ ë¼ì¸ : %d =====\n", idx);
 
          for(i = 0; i < idx; i++)
          {
             fprintf(fp, "%s,%s,%s,%s\n"
-                ,&book_info[i].ISBN
-                ,&book_info[i].title
-                ,&book_info[i].author
-                ,&book_info[i].publishing);
+                ,book_info[i].ISBN
+                ,book_info[i].title
+                ,book_info[i].author
+                ,book_info[i].publishing);
          }
 
          for(i = idx + 1; i < b_idx; i++)
          {
             fprintf(fp, "%s,%s,%s,%s\n"
-                ,&book_info[i].ISBN
-                ,&book_info[i].title
-                ,&book_info[i].author
-                ,&book_info[i].publishing);
+                ,book_info[i].ISBN
+                ,book_info[i].title
+                ,book_info[i].author
+                ,book_info[i].publishing);
          }
 
             fclose(fp);
             remove("book_info.txt");
             char oldname[80] = "modfiybook.txt";
             char newname[80] = "book_info.txt";
-            rename(oldname, newname);     //oldname ¿Í newname ÀÇ ÀÌ¸§À» ¹Ù²Û´Ù.
+            rename(oldname, newname);     //oldname ì™€ newname ì˜ ì´ë¦„ì„ ë°”ê¾¼ë‹¤.
             remove("modfiybook.txt");
-            printf("                                       Á¤»óÀûÀ¸·Î Ã³¸®µÇ¾ú½À´Ï´Ù.\n");
-            printf("                                       Ã³À½À¸·Î µÇµ¹¾Æ °©´Ï´Ù.");
+            printf("                                       ì •ìƒì ìœ¼ë¡œ ì²˜ë¦¬ë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+            printf("                                       ì²˜ìŒìœ¼ë¡œ ë˜ëŒì•„ ê°‘ë‹ˆë‹¤.");
             system("pause");
-           //fflush(stdin);
             b_idx = 0;
             main();
 }
-
-
-
-
