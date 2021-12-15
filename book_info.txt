@@ -1,4 +1,4 @@
+1,warrior,leauge,legend,1
+2,sing,money,show,1
+3,iphone,jobs,apple,1
 
-1,공학,공대,공대,0
-2,노래,쇼미,쇼미,0
-3,국힙,저딧,앰비션,0
