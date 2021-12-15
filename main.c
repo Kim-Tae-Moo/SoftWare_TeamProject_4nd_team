@@ -6,10 +6,10 @@
 
 // 고객 정보 구조체
 typedef struct _customer {
-    char id[10];                        //회원번호
-    char name[20];                      //고객이름
-    char phone[12];                     //전화번호
-    char address[50];                   //주소
+    char id[20];                        //고객 ID
+    char name[30];                      //고객이름
+    char phone[20];                     //전화번호
+    char address[60];                   //주소
 }CUSTOMER;
 
 // 도서 정보 구조체
@@ -56,6 +56,7 @@ int b_idx = 0;                          // 책정보를 몇개 담았는지 카운트
 int idx;
 RENT_INFO rent;                          //한 개의 비디오 대여/반납
 int rent_id = 1;                        //대여번호
+
 
 
 int main(void)
@@ -255,11 +256,11 @@ int main(void)
                 printf("                                     ┃            < 도서 관리 >            ┃\n");
                 printf("                                     ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n");
                 printf("                                     ┃        1. 도서 대여                 ┃\n");
+                printf("                                     ┃                                     ┃\n");
                 printf("                                     ┃        2. 도서 반납                 ┃\n");
+                printf("                                     ┃                                     ┃\n");
                 printf("                                     ┃        3. 대여 정보                 ┃\n");
-                printf("                                     ┃        4.                           ┃\n");
-                printf("                                     ┃        5.                           ┃\n");
-                printf("                                     ┃        6.                           ┃\n");
+                printf("                                     ┃                                     ┃\n");
                 printf("                                     ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n");
                 printf("                                     ┃        9. 메인메뉴로 이동           ┃\n");
                 printf("                                     ┃        0. 프로그램 종료             ┃\n");
@@ -360,7 +361,7 @@ void rent_book()
             , customer_info[i].address);
     }
 
-    printf("고객 번호를 입력하세요: ");
+    printf("고객 ID를 입력하세요: ");
     scanf("%d", &customer_id);
 
     printf("도서 대여가 완료되었습니다.");
@@ -501,13 +502,14 @@ void rent_information()
 int searchtitle_book(void)
 {
     int i;
-    char title[200];
+    char title[200], Ctitle[200];
     printf("                                       제목: ");
     scanf("%s", title);
+    //strcpy(Ctitle, title);
 
     for (i = 0; i < b_idx; i++)
     {
-        if (strcmp(title, book_info[i].title) == 0)
+        if (strcmp(Ctitle, book_info[i].title) == 0)
         return i;
     }
     return -1;
@@ -566,7 +568,7 @@ void new_book(void)
     FILE* b_fp = fopen("book_info.txt", "a");
     //구조체 배열에 책 정보를 입력받음
     printf("                                       ISBN: ");
-    scanf("%s", &book_info[b_idx].ISBN);
+    scanf("%s", book_info[b_idx].ISBN);
     printf("                                       책 제목: ");
     scanf("%s", book_info[b_idx].title);
     printf("                                       책 저자: ");
@@ -574,7 +576,7 @@ void new_book(void)
     printf("                                       출판사: ");
     scanf("%s", book_info[b_idx].publishing);
     book_info[b_idx].is_rented = 0;
-    fprintf(b_fp, "\n%s,%s,%s,%s,%d"
+    fprintf(b_fp, "%s,%s,%s,%s,%d\n"
         , book_info[b_idx].ISBN
         , book_info[b_idx].title
         , book_info[b_idx].author
@@ -590,16 +592,20 @@ void new_customer(void)
 {
     FILE* m_fp = fopen("customer_info.txt", "a");
     //구조체 배열에 고객 정보를 입력 받음
-    printf("                                       회원 번호: ");
+    printf("                                       예시 -> samuelLee17, Seongdallor, Mookimchi89\n ");
+    printf("                                       회원 ID: ");
     scanf("%s", customer_info [c_idx].id);
+    printf("                                       예시 -> LeeSangKon, EunSeongWon, KimTaeMoo\n ");
     printf("                                       이름: ");
     scanf("%s", customer_info [c_idx].name);
+    printf("                                       예시 -> 010-2323-3434, 010-2323-3443, 010-2332-2424\n ");
     printf("                                       연락처: ");
     scanf("%s", customer_info [c_idx].phone);
+    printf("                                       예시 -> Seoul, JeonJu, KwangJu, KyeongKi\n ");
     printf("                                       주소: ");
     scanf("%s", customer_info [c_idx].address);
 
-    fprintf(m_fp, "\n%s,%s,%s,%s"
+    fprintf(m_fp, "%s,%s,%s,%s\n"
         , customer_info [c_idx].id
         , customer_info [c_idx].name
         , customer_info [c_idx].phone
@@ -716,13 +722,13 @@ void modify_customer(void)
     int i;
 
     printf("\n                                       변경을 시작합니다. \n\n");
-    printf("                                       새로운 회원번호를 입력하여 주세요 : "); scanf("%s", &new_user_number);
+    printf("                                       새로운 고객 ID를 입력하여 주세요 : "); scanf("%s", &new_user_number);
     printf("                                       새로운 이름을 입력하여 주세요 : "); scanf("%s", new_user_name);
     printf("                                       새로운 전화번호를 입력하여 주세요 : "); scanf("%s", new_user_phone_number);
     printf("                                       새로운 주소를 입력하여 주세요 : "); scanf("%s", new_user_address);
 
     printf("                                       ━━━━ 새로운 정보를 확인합니다.━━━━ \n\n");
-    printf("                                       새로운 회원번호 : %s\n", new_user_number);
+    printf("                                       새로운 고객 ID : %s\n", new_user_number);
     printf("                                       새로운 이름 : %s\n", new_user_name);
     printf("                                       새로운 전화번호 : %s\n", new_user_phone_number);
     printf("                                       새로운 주소 : %s\n", new_user_address);
@@ -736,7 +742,7 @@ void modify_customer(void)
             strcpy(customer_info[idx].address, new_user_address);
             FILE *fp = fopen("modfiy.txt","wb");
             for(i = 0; i < c_idx; i++){
-                fprintf(fp, "                                       %s,%s,%s,%s\n"
+                fprintf(fp, "%s,%s,%s,%s\n"
                 , customer_info[i].id
                 , customer_info[i].name
                 , customer_info[i].phone
@@ -754,7 +760,7 @@ void modify_customer(void)
         }
         else
         {
-            printf("                                       처음으로 되돌아 갑니다.");
+            printf("                                       \n처음으로 되돌아 갑니다.");
           //  system("pause");
         }
 
